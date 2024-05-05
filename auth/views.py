@@ -42,7 +42,9 @@ class LoginView(views.APIView):
         else:
             return Response({"error": "Wrong Credentials"}, status=status.HTTP_400_BAD_REQUEST)
         
-class TestView(views.APIView):
-    authentication_classes = [JwtTokensAuthentication]
-    def get(self, request, *args, **kwargs):
-        return Response({"message": "Hello, World!"})
+class LogoutView(views.APIView):
+    authentication_classes = (JwtTokensAuthentication,)
+
+    def post(self, request, *args, **kwargs):
+        request.user.auth_token.delete()
+        return Response({"message": "Logged out successfully"}, status=status.HTTP_200_OK)
