@@ -21,7 +21,7 @@ class Task(models.Model):
         return self.title
 
     @property
-    def status(self):
+    def get_status(self):
         if self.completed:
             return "completed"
         elif self.deadline < timezone.now():
